@@ -14,7 +14,7 @@ class PenyewaanController extends Controller
     public function index()
     {
         $penyewaans = Penyewaan::with(['penyewa', 'laptop'])->latest('id_sewa')->get();
-        return view('penyewaan', compact('penyewaans'));
+        return view('penyewaan.index', compact('penyewaans'));
     }
 
     public function create()
@@ -24,7 +24,7 @@ class PenyewaanController extends Controller
         // Filter laptop: Cuma yang statusnya 'available'
         $laptops = Laptop::where('status', 'available')->get();
 
-        return view('buatPenyewaan', compact('penyewas', 'laptops'));
+        return view('penyewaan.buatPenyewaan', compact('penyewas', 'laptops'));
     }
 
     public function store(Request $request)

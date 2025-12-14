@@ -153,7 +153,7 @@
                                     </form>
                                 @else
                                     <button disabled class="cursor-not-allowed opacity-50 bg-gray-200 text-gray-500 font-bold py-2 px-4 rounded-lg text-xs flex items-center gap-2 mx-auto">
-                                        <i class="fa-solid fa-file-circle-check"></i> Riwayat
+                                        <i class="fa-solid fa-file-circle-check"></i> Done
                                     </button>
                                 @endif
                             </td>

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LaptopController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('penyewaan');
 });
 
 Route::get('/dashboard', function () {
