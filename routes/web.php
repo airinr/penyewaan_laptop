@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PenyewaanController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LaptopController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,6 +23,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/penyewaan/create', [PenyewaanController::class, 'create'])->name('penyewaan.create');
     Route::post('/penyewaan/store', [PenyewaanController::class, 'store'])->name('penyewaan.store');
     Route::put('/penyewaan/{id}/kembali', [PenyewaanController::class, 'kembali'])->name('penyewaan.kembali');
+
+    // laptop
+    Route::resource('laptop', LaptopController::class);
 });
+
 
 require __DIR__.'/auth.php';
