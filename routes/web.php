@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PenyewaanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,6 +16,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    // Penyewaan
+    Route::get('/penyewaan', [PenyewaanController::class, 'index'])->name('penyewaan');
+    Route::get('/penyewaan/create', [PenyewaanController::class, 'create'])->name('penyewaan.create');
+    Route::post('/penyewaan/store', [PenyewaanController::class, 'store'])->name('penyewaan.store');
+    Route::put('/penyewaan/{id}/kembali', [PenyewaanController::class, 'kembali'])->name('penyewaan.kembali');
 });
 
 require __DIR__.'/auth.php';

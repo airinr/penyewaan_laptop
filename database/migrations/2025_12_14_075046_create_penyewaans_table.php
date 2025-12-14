@@ -21,14 +21,12 @@ return new class extends Migration
             $table->unsignedBigInteger('id_penyewa');
             $table->unsignedBigInteger('id_laptop');
 
-            // Data Tanggal
             $table->date('tgl_mulai');
-            $table->date('tgl_selesai');
+            $table->date('tgl_selesai'); // WAJIB ISI (DEADLINE)
             $table->date('tgl_dikembalikan')->nullable();
 
-            // Status & Harga
             $table->string('status', 20);
-            $table->bigInteger('harga');
+            $table->bigInteger('harga')->nullable(); // Tetap null, dihitung pas balik
             $table->bigInteger('denda')->nullable();
 
             // --- BAGIAN INI YANG MEMPERBAIKI ERROR 150 ---
@@ -37,14 +35,14 @@ return new class extends Migration
             $table->foreign('id_penyewa')
                   ->references('id_penyewa')  // Kolom PK di tabel penyewas
                   ->on('penyewas')            // Nama tabel tujuan (HARUS SAMA persis dengan migration kamu)
-                  ->onDelete('restrict')
+                  ->onDelete('cascade')
                   ->onUpdate('cascade');
 
             // 2. Relasi ke tabel LAPTOPS (Plural)
             $table->foreign('id_laptop')
                   ->references('id_laptop')   // Kolom PK di tabel laptops
                   ->on('laptops')             // Nama tabel tujuan (HARUS SAMA persis dengan migration kamu)
-                  ->onDelete('restrict')
+                  ->onDelete('cascade')
                   ->onUpdate('cascade');
         });
     }
