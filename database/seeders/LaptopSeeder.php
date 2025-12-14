@@ -9,7 +9,7 @@ class LaptopSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('laptop')->insert([
+        DB::table('laptops')->insert([
             [
                 'id_laptop' => 1,
                 'kode_laptop' => 'LPT-0001',

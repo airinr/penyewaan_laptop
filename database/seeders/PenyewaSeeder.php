@@ -9,7 +9,7 @@ class PenyewaSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('penyewa')->insert([
+        DB::table('penyewas')->insert([
             [
                 'id_penyewa' => 1,
                 'nama' => 'Andi Pratama',
