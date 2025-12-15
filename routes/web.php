@@ -6,7 +6,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LaptopController;
 
 Route::get('/', function () {
-    return view('penyewaan');
+    if (Auth::check()) {
+        return redirect()->route('penyewaan');
+    }
+    
+    return redirect()->route('login'); 
 });
 
 Route::get('/dashboard', function () {
