@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PenyewaanController;
+use App\Http\Controllers\PenyewaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LaptopController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -30,6 +32,9 @@ Route::middleware('auth')->group(function () {
 
     // laptop
     Route::resource('laptop', LaptopController::class);
+
+    // Penyewa  
+    Route::resource('penyewa', PenyewaController::class);
 });
 
 

@@ -12,6 +12,7 @@
     </style>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800 antialiased">
+    <x-navbar />
 
     <div class="container mx-auto px-4 py-10 max-w-6xl">
         

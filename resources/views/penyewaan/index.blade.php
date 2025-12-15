@@ -34,7 +34,7 @@
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800 antialiased">
-
+ <x-navbar />
     <div class="container mx-auto px-4 py-10">
         
         <div class="flex flex-col md:flex-row justify-between items-center mb-8 animate-fade-in-up">

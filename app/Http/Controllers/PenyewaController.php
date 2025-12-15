@@ -12,7 +12,8 @@ class PenyewaController extends Controller
      */
     public function index()
     {
-        //
+        $penyewas = Penyewa::all();
+        return view('penyewa.index', compact('penyewas'));
     }
 
     /**
@@ -20,7 +21,7 @@ class PenyewaController extends Controller
      */
     public function create()
     {
-        //
+        return view('penyewa.create');
     }
 
     /**
@@ -28,7 +29,16 @@ class PenyewaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validated = $request->validate([
+            'nama'   => ['required', 'string', 'max:100'],
+            'telp'   => ['required', 'string', 'max:20'],
+            'email'  => ['nullable', 'email', 'max:100'],
+            'alamat' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        Penyewa::create($validated);
+
+        return redirect()->route('penyewa.index')->with('success', 'Penyewa berhasil ditambahkan.');
     }
 
     /**
@@ -44,7 +54,7 @@ class PenyewaController extends Controller
      */
     public function edit(penyewa $penyewa)
     {
-        //
+        return view('penyewa.edit', compact('penyewa'));
     }
 
     /**
@@ -52,7 +62,16 @@ class PenyewaController extends Controller
      */
     public function update(Request $request, penyewa $penyewa)
     {
-        //
+            $validated = $request->validate([
+            'nama'   => ['required','string','max:100'],
+            'telp'   => ['required','string','max:20'],
+            'email'  => ['nullable','email','max:100'],
+            'alamat' => ['nullable','string','max:255'],
+        ]);
+
+        $penyewa->update($validated);
+
+        return redirect()->route('penyewa.index')->with('success', 'Data penyewa berhasil diperbarui.');
     }
 
     /**
@@ -60,6 +79,9 @@ class PenyewaController extends Controller
      */
     public function destroy(penyewa $penyewa)
     {
-        //
+        $penyewa->delete();
+
+        return redirect()->route('penyewa.index')
+            ->with('success', 'Data penyewa berhasil dihapus.');
     }
 }
