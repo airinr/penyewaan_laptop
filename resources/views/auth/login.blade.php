@@ -18,9 +18,9 @@
         <div class="w-full lg:w-1/2 p-8 md:p-12 lg:p-14 flex flex-col justify-center">
             
             <div class="mb-8">
-                <p class="text-xl font-bold tracking-tighter text-black underline text-2xl flex items-center gap-2">
+                <a href="/" class="text-xl font-bold tracking-tighter text-black text-2xl flex items-center gap-2">
                     Meine Laptop
-                </p>
+                </a>
             </div>
 
             <div class="mb-8">

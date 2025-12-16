@@ -12,7 +12,7 @@ Route::get('/', function () {
         return redirect()->route('penyewaan');
     }
     
-    return redirect()->route('login'); 
+    return view('welcome');
 });
 
 Route::get('/dashboard', function () {
