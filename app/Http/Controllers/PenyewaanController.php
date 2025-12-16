@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penyewaan;
-use App\Models\Penyewa;
+use App\Models\penyewa;
 use App\Models\Laptop;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

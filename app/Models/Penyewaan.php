@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Laptop;
-use App\Models\Penyewa;
+use App\Models\penyewa;
 use Illuminate\Database\Eloquent\Model;
 
 class Penyewaan extends Model
@@ -14,11 +14,11 @@ class Penyewaan extends Model
 
     public function penyewa()
     {
-        return $this->belongsTo(Penyewa::class, 'id_penyewa', 'id_penyewa');
+        return $this->belongsTo(penyewa::class, 'id_penyewa', 'id_penyewa');
     }
 
     public function laptop()
     {
-        return $this->belongsTo(Laptop::class, 'id_laptop', 'id_laptop');
+        return $this->belongsTo(laptop::class, 'id_laptop', 'id_laptop');
     }
 }

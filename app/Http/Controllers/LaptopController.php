@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\laptop;
+use App\Models\Laptop;
 use Illuminate\Http\Request;
 
 class LaptopController extends Controller
