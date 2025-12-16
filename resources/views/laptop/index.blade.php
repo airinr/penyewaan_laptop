@@ -10,7 +10,6 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         
-        /* Animasi Muncul ke atas */
         .animate-fade-in-up {
             animation: fadeInUp 0.8s ease-out;
         }
@@ -19,10 +18,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Efek Hover Baris Tabel */
         .table-row-hover:hover {
-            background-color: #f9fafb; /* gray-50 */
-            transform: scale-[1.01]; /* Sedikit zoom (opsional, jika ingin subtle hapus baris ini) */
+            background-color: #f9fafb;
+            transform: scale-[1.01];
             transition: all 0.2s ease;
         }
         
@@ -110,7 +108,7 @@
 
                         <td class="px-6 py-5 align-middle">
                             <span class="text-black font-extrabold text-sm">Rp {{ number_format($laptop->harga_sewa, 0, ',', '.') }}</span>
-                            <span class="text-gray-400 text-xs font-medium">/hari</span>
+                            <span class="text-gray-400 text-xs font-medium">/bulan</span>
                         </td>
 
                         <td class="px-6 py-5 align-middle text-center">
@@ -122,7 +120,6 @@
                                     default => 'bg-gray-100 text-gray-600'
                                 };
                                 
-                                // Indikator Pulse hanya jika Available
                                 $dotIndicator = $laptop->status == 'available' ? '<span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse mr-2"></span>' : '';
                             @endphp
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold {{ $statusStyle }}">

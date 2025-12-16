@@ -18,6 +18,6 @@ class penyewa extends Model
 
     public function penyewaan()
     {
-        return $this->hasMany(Penyewaan::class);
+        return $this->hasMany(Penyewaan::class, 'id_penyewa');
     }
 }

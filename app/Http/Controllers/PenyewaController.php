@@ -32,8 +32,8 @@ class PenyewaController extends Controller
          $validated = $request->validate([
             'nama'   => ['required', 'string', 'max:100'],
             'telp'   => ['required', 'string', 'max:20'],
-            'email'  => ['nullable', 'email', 'max:100'],
-            'alamat' => ['nullable', 'string', 'max:255'],
+            'email'  => ['required', 'email', 'max:100'],
+            'alamat' => ['required', 'string', 'max:255'],
         ]);
 
         Penyewa::create($validated);
@@ -65,8 +65,8 @@ class PenyewaController extends Controller
             $validated = $request->validate([
             'nama'   => ['required','string','max:100'],
             'telp'   => ['required','string','max:20'],
-            'email'  => ['nullable','email','max:100'],
-            'alamat' => ['nullable','string','max:255'],
+            'email'  => ['required','email','max:100'],
+            'alamat' => ['required','string','max:255'],
         ]);
 
         $penyewa->update($validated);
@@ -77,8 +77,15 @@ class PenyewaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(penyewa $penyewa)
+    public function destroy(Penyewa $penyewa)
     {
+        $sedangMenyewa = $penyewa->penyewaan()->where('status', 'ongoing')->exists();
+
+        if ($sedangMenyewa) {
+            return redirect()->back()
+                ->with('error', 'Gagal menghapus! Penyewa ini masih memiliki transaksi yang sedang berjalan (ongoing).');
+        }
+
         $penyewa->delete();
 
         return redirect()->route('penyewa.index')

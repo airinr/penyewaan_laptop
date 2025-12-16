@@ -19,9 +19,7 @@ class PenyewaanController extends Controller
 
     public function create()
     {
-        // Ambil data untuk dropdown
         $penyewas = Penyewa::all();
-        // Filter laptop: Cuma yang statusnya 'available'
         $laptops = Laptop::where('status', 'available')->get();
 
         return view('penyewaan.buatPenyewaan', compact('penyewas', 'laptops'));
@@ -29,19 +27,17 @@ class PenyewaanController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi
         $request->validate([
             'tipe_penyewa' => 'required|in:lama,baru',
             'id_laptop'    => 'required|exists:laptops,id_laptop',
             'tgl_mulai'    => 'required|date',
-            'tgl_selesai'  => 'required|date|after:tgl_mulai', // Harus setelah tgl mulai
+            'tgl_selesai'  => 'required|date|after:tgl_mulai',
         ]);
 
         return DB::transaction(function () use ($request) {
             
             $idPenyewa = null;
 
-            // Logic Switch Penyewa (Tetap Sama)
             if ($request->tipe_penyewa == 'baru') {
                 $request->validate([
                     'nama_baru'   => 'required|string|max:70',
@@ -59,37 +55,27 @@ class PenyewaanController extends Controller
                 $idPenyewa = $request->id_penyewa_lama;
             }
 
-            // Kode Sewa Otomatis
             $today = date('ymd');
             $prefix = 'SEWA-' . $today . '-';
             $lastSewa = Penyewaan::where('kode_sewa', 'like', $prefix . '%')->orderBy('id_sewa', 'desc')->first();
             $newNumber = $lastSewa ? ((int) substr($lastSewa->kode_sewa, -3) + 1) : 1;
             $kodeSewaBaru = $prefix . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
             
-            // --- LOGIC BARU: HITUNG HARGA BULANAN ---
             
-            // 1. Ambil data laptop
             $laptop = Laptop::findOrFail($request->id_laptop);
             
-            // 2. Hitung Durasi dalam BULAN
             $start = Carbon::parse($request->tgl_mulai);
             $end = Carbon::parse($request->tgl_selesai);
             
-            // floatDiffInMonths: Menghitung selisih bulan (bisa desimal, misal 1.2 bulan)
-            // ceil: Membulatkan ke atas (1.2 jadi 2) agar penyewa bayar full bulan berjalan
             $durasiBulan = ceil($start->floatDiffInMonths($end));
 
-            // Minimal durasi 1 bulan
             if ($durasiBulan < 1) $durasiBulan = 1;
 
-            // 3. Kalikan (Harga Bulan x Durasi Bulan)
             $totalHarga = $durasiBulan * $laptop->harga_sewa;
 
-            // Simpan Transaksi
             Penyewaan::create([
-                // ... (field kode_sewa, id_penyewa sama) ...
-                'kode_sewa'   => $kodeSewaBaru, // Pastikan variabel ini ada dari logic atas
-                'id_penyewa'  => $idPenyewa,    // Pastikan variabel ini ada dari logic atas
+                'kode_sewa'   => $kodeSewaBaru,
+                'id_penyewa'  => $idPenyewa, 
                 'id_laptop'   => $request->id_laptop,
                 'tgl_mulai'   => $request->tgl_mulai,
                 'tgl_selesai' => $request->tgl_selesai,
@@ -108,36 +94,28 @@ class PenyewaanController extends Controller
     {
         $sewa = Penyewaan::with('laptop')->findOrFail($id);
         
-        // 1. Tanggal Hari Ini (Saat dikembalikan)
         $tglDikembalikan = Carbon::now();
-        // $tglDikembalikan = Carbon::parse('2025-12-20'); // Uncomment buat ngetes tanggal telat manual
         
         $tglDeadline = Carbon::parse($sewa->tgl_selesai);
         $tglMulai = Carbon::parse($sewa->tgl_mulai);
 
-        // 2. Hitung Harga Sewa Dasar (Durasi Pakai x Harga Laptop)
-        // Hitung durasi real pemakaian (dari mulai sampai dikembalikan)
         $durasiPakai = $tglMulai->diffInDays($tglDikembalikan);
-        if ($durasiPakai < 1) $durasiPakai = 1; // Minimal bayar 1 hari
+        if ($durasiPakai < 1) $durasiPakai = 1; 
         $totalHargaSewa = $durasiPakai * $sewa->laptop->harga_sewa;
 
-        // 3. RUMUS DENDA (Deadline vs Dikembalikan)
-        // Parameter false agar bisa return nilai negatif/positif
         $selisihHari = $tglDeadline->diffInDays($tglDikembalikan, false); 
         
         $denda = 0;
         if ($selisihHari > 0) {
-            // Kalau selisih positif, berarti TELAT
             $denda = $selisihHari * 50000;
         }
 
-        // 4. Update Database
         DB::transaction(function() use ($sewa, $tglDikembalikan, $totalHargaSewa, $denda) {
             $sewa->update([
                 'tgl_dikembalikan' => $tglDikembalikan,
                 'status'           => 'selesai',
-                'harga'            => $totalHargaSewa, // Harga sewa murni
-                'denda'            => $denda // Denda keterlambatan
+                'harga'            => $totalHargaSewa, 
+                'denda'            => $denda 
             ]);
 
             $sewa->laptop->update(['status' => 'available']);

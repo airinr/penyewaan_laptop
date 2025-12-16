@@ -85,7 +85,7 @@
 
                     <div>
                         <label class="block text-sm font-bold text-gray-700 mb-2">
-                            Email (Opsional)
+                            Email
                         </label>
                         <input type="email" name="email" value="{{ old('email') }}"
                                class="w-full border border-gray-200 rounded-xl py-3 px-4 focus:ring-2 focus:ring-black focus:border-black focus:outline-none transition-all placeholder-gray-400 bg-gray-50 focus:bg-white"

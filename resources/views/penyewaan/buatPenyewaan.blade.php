@@ -130,7 +130,7 @@
                                 <input type="number" name="telp_baru" class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-black focus:border-black focus:outline-none" placeholder="No Telp/WA">
                             </div>
                             <div class="md:col-span-1">
-                                <input type="email" name="email_baru" class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-black focus:border-black focus:outline-none" placeholder="Email (Opsional)">
+                                <input type="email" name="email_baru" class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-black focus:border-black focus:outline-none" placeholder="Email">
                             </div>
                             <div class="md:col-span-1">
                                 <input type="text" name="alamat_baru" class="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-black focus:border-black focus:outline-none" placeholder="Alamat Domisili">
@@ -183,12 +183,10 @@
 
     <script>
         function hitungTotal() {
-            // 1. Ambil Harga Per Bulan
             const laptopSelect = document.getElementById('laptopSelect');
             const selectedOption = laptopSelect.options[laptopSelect.selectedIndex];
             const hargaPerBulan = parseFloat(selectedOption.getAttribute('data-price')) || 0;
 
-            // 2. Ambil Tanggal
             const tglMulai = new Date(document.getElementById('tglMulai').value);
             const tglSelesai = new Date(document.getElementById('tglSelesai').value);
 
@@ -196,30 +194,23 @@
             let bulan = 0;
 
             if (hargaPerBulan > 0 && tglMulai && tglSelesai && !isNaN(tglMulai) && !isNaN(tglSelesai)) {
-                // Pastikan tanggal selesai > tanggal mulai
                 if (tglSelesai > tglMulai) {
                     
-                    // Hitung selisih Tahun dan Bulan
                     let years = tglSelesai.getFullYear() - tglMulai.getFullYear();
                     let months = tglSelesai.getMonth() - tglMulai.getMonth();
                     let days = tglSelesai.getDate() - tglMulai.getDate();
 
-                    // Total selisih bulan murni
                     bulan = (years * 12) + months;
 
-                    // LOGIC CEILING (Pembulatan ke Atas):
-                    // Jika ada kelebihan hari (misal 1 Jan - 2 Feb), dianggap masuk bulan ke-2
                     if (days > 0) {
                         bulan += 1;
                     } 
-                    // Jika bulan masih 0 (kurang dari sebulan), hitung 1 bulan
                     if (bulan < 1) bulan = 1;
 
                     total = bulan * hargaPerBulan;
                 }
             }
 
-            // Update UI
             document.getElementById('infoDurasi').innerText = `Harga Bulanan x ${bulan} Bulan`;
             document.getElementById('displayHarga').innerText = 'Rp ' + new Intl.NumberFormat('id-ID').format(total);
         }

@@ -13,13 +13,11 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         
-        /* Custom Background Pattern (Dot halus) */
         .bg-dot-pattern {
             background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
             background-size: 24px 24px;
         }
 
-        /* Animasi Text Muncul */
         .animate-fade-up { animation: fadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; transform: translateY(30px); }
         .delay-100 { animation-delay: 0.1s; }
         .delay-200 { animation-delay: 0.2s; }

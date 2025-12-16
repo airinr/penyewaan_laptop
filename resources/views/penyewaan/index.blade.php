@@ -22,7 +22,7 @@
         }
         
         .table-row-hover:hover {
-            background-color: #f9fafb; /* gray-50 */
+            background-color: #f9fafb; 
             transition: all 0.2s ease;
         }
     </style>

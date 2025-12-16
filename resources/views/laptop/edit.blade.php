@@ -90,7 +90,7 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Harga Sewa (Per Hari)</label>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Harga Sewa (Per Bulan)</label>
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-500 font-bold text-sm">Rp</span>
                                 <input type="number" name="harga_sewa" value="{{ old('harga_sewa', $laptop->harga_sewa) }}"

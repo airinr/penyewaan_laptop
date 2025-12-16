@@ -13,7 +13,6 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
 
-        /* Animasi Custom */
         .animate-fade-in-up {
             animation: fadeInUp 0.8s ease-out;
         }
@@ -22,9 +21,8 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Smooth Row Hover */
         .table-row-hover:hover {
-            background-color: #f9fafb; /* gray-50 */
+            background-color: #f9fafb; 
             transform: scale(1.01);
             transition: all 0.2s ease;
         }
@@ -64,6 +62,23 @@
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-circle-check text-black"></i>
                     <span class="font-medium text-sm">{{ session('success') }}</span>
+                </div>
+                <button @click="show = false" class="text-gray-400 hover:text-black transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        @endif
+
+        {{-- ALERT ERROR --}}
+        @if(session('error'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
+                 x-transition:leave="transition ease-in duration-300"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-90"
+                 class="animate-fade-in-up bg-white border border-gray-200 border-l-4 border-l-red-600 text-gray-800 p-4 mb-8 rounded-lg shadow-sm flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-circle-exclamation text-red-600"></i>
+                    <span class="font-medium text-sm">{{ session('error') }}</span>
                 </div>
                 <button @click="show = false" class="text-gray-400 hover:text-black transition-colors">
                     <i class="fa-solid fa-xmark"></i>
